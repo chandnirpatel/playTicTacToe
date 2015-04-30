@@ -1,23 +1,38 @@
+import org.junit.Before;
 import org.junit.Test;
 
 import java.io.PrintStream;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Matchers.startsWith;
+import static org.mockito.Mockito.*;
 
-/**
- * Created by cpatel on 4/30/15.
- */
+
 public class TicTacToeTest {
+
+    private PrintStream printStream;
+    private ReadUserInput readUserInput;
+    private TicTacToe ticTacToe;
+
+    @Before
+    public void setUp() throws Exception {
+        printStream = mock(PrintStream.class);
+        readUserInput = new ReadUserInput();
+        ticTacToe = new TicTacToe(printStream, readUserInput);
+    }
 
     @Test
     public void shouldDisplayTicTacToeBoard() {
-        PrintStream printStream = mock(PrintStream.class);
-        TicTacToe ticTacToe = new TicTacToe(printStream);
         ticTacToe.displayBoard();
-        verify(printStream).println("  |   |\n_________\n  |   |\n_________\n  |   |");
+        verify(printStream).println("  |  |  \n_________\n  |  |  \n_________\n  |  |  ");
+    }
 
+    @Test
+    public void shouldDisplayXfirstWhenUserInputs1(){
+        when(readUserInput.locationFromUser()).thenReturn(1);
+
+        ticTacToe.turn();
+
+        verify(printStream).println(startsWith("X"));
     }
 
 
