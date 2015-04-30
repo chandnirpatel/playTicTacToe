@@ -1,11 +1,12 @@
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class TicTacToe {
     private PrintStream printStream;
     private ReadUserInput readUserInput;
-    private ArrayList<String> board = new ArrayList<>();
+    private List<String> board = new ArrayList<>();
 
     public TicTacToe(PrintStream printStream, ReadUserInput readUserInput) {
         this.printStream = printStream;
@@ -14,7 +15,7 @@ public class TicTacToe {
     }
 
     private void generateEmptyBoard(){
-        for (int location = 0; location < 9 ; location++) {
+        for (int location = 0; location < 9; location++) {
             board.add("  ");
         }
     }
@@ -26,22 +27,25 @@ public class TicTacToe {
     }
 
     public void displayBoard() {
-        String boardForamt = "";
-        for (int location = 1; location <=9 ; location++) {
-            boardForamt += board.get(location-1);
-            if (location % 3 != 0){
-                boardForamt += "|";
-            } else if (location < 9) {
-                boardForamt += "\n_________\n";
-            }
-        }
-        printStream.println(boardForamt);
+        String boardFormat = board.get(0) + "|" + board.get(1) +"|" + board.get(2)
+                + "\n_________\n"
+                + board.get(3) + "|" + board.get(4) + "|" + board.get(5)
+                + "\n_________\n" + board.get(6) +"|"  + board.get(7) +"|" + board.get(8);
+
+        printStream.println(boardFormat);
+    }
+
+    private boolean isEndOfTopTwoRows(int location) {
+        return location < 9;
+    }
+
+    private boolean isNotEndOfRow(int location) {
+        return location % 3 != 0;
     }
 
     private void addUserMoveToBoard(Integer location){
         board.add(location - 1,"X ");
     }
-
 
 
 }

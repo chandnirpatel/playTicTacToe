@@ -4,5 +4,6 @@ public class Main {
         ReadUserInput readUserInput = new ReadUserInput();
         TicTacToe ticTacToe = new TicTacToe(System.out, readUserInput);
         ticTacToe.turn();
+
     }
 }
