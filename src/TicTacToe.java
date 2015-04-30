@@ -7,6 +7,7 @@ public class TicTacToe {
     private PrintStream printStream;
     private ReadUserInput readUserInput;
     private List<String> board = new ArrayList<>();
+    private int turnCounter = 0;
 
     public TicTacToe(PrintStream printStream, ReadUserInput readUserInput) {
         this.printStream = printStream;
@@ -20,10 +21,31 @@ public class TicTacToe {
         }
     }
 
-    public void turn(){
-        Integer location = readUserInput.locationFromUser();
-        addUserMoveToBoard(location);
+    private void turn(){
+        turnCounter++;
+        Integer location = getValidLocation();
+        if (turnCounter % 2 == 1){
+            addUserXMoveToBoard(location);
+        } else {
+            addUserOMoveToBoard(location);
+        }
         displayBoard();
+    }
+
+    private Integer getValidLocation() {
+        Integer location = readUserInput.locationFromUser();
+
+        if (isTaken(location)){
+            printStream.println("Location already taken");
+            location = readUserInput.locationFromUser();
+        }
+        return location;
+    }
+
+    private boolean isTaken(Integer location) {
+        String currentValue = board.get(location - 1);
+        boolean isBlank = "  ".equals(currentValue);
+        return !isBlank;
     }
 
     public void displayBoard() {
@@ -31,21 +53,19 @@ public class TicTacToe {
                 + "\n_________\n"
                 + board.get(3) + "|" + board.get(4) + "|" + board.get(5)
                 + "\n_________\n" + board.get(6) +"|"  + board.get(7) +"|" + board.get(8);
-
         printStream.println(boardFormat);
     }
 
-    private boolean isEndOfTopTwoRows(int location) {
-        return location < 9;
+    private void addUserOMoveToBoard(Integer location) {
+        board.add(location - 1, "O");
     }
 
-    private boolean isNotEndOfRow(int location) {
-        return location % 3 != 0;
-    }
-
-    private void addUserMoveToBoard(Integer location){
+    private void addUserXMoveToBoard(Integer location){
         board.add(location - 1,"X ");
     }
 
-
+    public void play() {
+        turn();
+        turn();
+    }
 }

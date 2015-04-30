@@ -28,20 +28,34 @@ public class TicTacToeTest {
 
     @Test
     public void shouldDisplayXfirstWhenUserInputs1(){
-        when(readUserInput.locationFromUser()).thenReturn(1);
+        when(readUserInput.locationFromUser()).thenReturn(1).thenReturn(1);
 
-        ticTacToe.turn();
+        ticTacToe.play();
 
         verify(printStream).println(startsWith("X"));
     }
 
     @Test
     public void shouldDisplayXinSecondSlotWhenIInput2(){
-        when(readUserInput.locationFromUser()).thenReturn(2);
+        when(readUserInput.locationFromUser()).thenReturn(2).thenReturn(1);
 
-        ticTacToe.turn();
+        ticTacToe.play();
 
         verify(printStream).println(startsWith("  |X"));
+    }
+
+    @Test
+    public void shouldDisplayOWhenSecondPlayerPlays(){
+        when(readUserInput.locationFromUser()).thenReturn(1).thenReturn(2);
+        ticTacToe.play();
+        verify(printStream).println(contains("X |O"));
+    }
+
+    @Test
+    public void shouldDisplayErrorIfLocationIsAlreadyTaken(){
+        when(readUserInput.locationFromUser()).thenReturn(1).thenReturn(1);
+        ticTacToe.play();
+        verify(printStream).println(contains("Location already taken"));
     }
 
 
