@@ -16,7 +16,7 @@ public class TicTacToeTest {
     @Before
     public void setUp() throws Exception {
         printStream = mock(PrintStream.class);
-        readUserInput = new ReadUserInput();
+        readUserInput = mock(ReadUserInput.class);
         ticTacToe = new TicTacToe(printStream, readUserInput);
     }
 
@@ -33,6 +33,15 @@ public class TicTacToeTest {
         ticTacToe.turn();
 
         verify(printStream).println(startsWith("X"));
+    }
+
+    @Test
+    public void shouldDisplayXinSecondSlotWhenIInput2(){
+        when(readUserInput.locationFromUser()).thenReturn(2);
+
+        ticTacToe.turn();
+
+        verify(printStream).println(startsWith("  |X"));
     }
 
 

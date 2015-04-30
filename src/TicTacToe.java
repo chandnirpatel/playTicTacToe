@@ -1,16 +1,15 @@
 import java.io.PrintStream;
 import java.util.ArrayList;
 
-/**
- * Created by cpatel on 4/30/15.
- */
+
 public class TicTacToe {
     private PrintStream printStream;
-    private ReadUserInput readUserInput = new ReadUserInput();
+    private ReadUserInput readUserInput;
     private ArrayList<String> board = new ArrayList<>();
 
     public TicTacToe(PrintStream printStream, ReadUserInput readUserInput) {
         this.printStream = printStream;
+        this.readUserInput = readUserInput;
         generateEmptyBoard();
     }
 
@@ -18,6 +17,12 @@ public class TicTacToe {
         for (int location = 0; location < 9 ; location++) {
             board.add("  ");
         }
+    }
+
+    public void turn(){
+        Integer location = readUserInput.locationFromUser();
+        addUserMoveToBoard(location);
+        displayBoard();
     }
 
     public void displayBoard() {
@@ -33,14 +38,8 @@ public class TicTacToe {
         printStream.println(boardForamt);
     }
 
-    public void turn(){
-        addUserMoveToBoard(readUserInput.locationFromUser());
-        displayBoard();
-    }
-
-    private ArrayList<String> addUserMoveToBoard(Integer location){
-        board.add(location - 1,"X");
-        return null;
+    private void addUserMoveToBoard(Integer location){
+        board.add(location - 1,"X ");
     }
 
 
